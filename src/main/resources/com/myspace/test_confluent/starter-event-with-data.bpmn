@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns:xsi="xsi" id="_xJP_EGeZEDyi7pUAzxfVNQ" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd " exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
+  <bpmn2:itemDefinition id="_messageItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="_eventDataItem" structureRef="String"/>
+  <bpmn2:itemDefinition id="starterType" structureRef=""/>
+  <bpmn2:itemDefinition id="_141B52DE-9453-44C6-B81F-F7B4F354DC27" structureRef=""/>
+  <bpmn2:itemDefinition id="_19339796-FA17-46E7-965F-5BB51C53AC51" structureRef="String"/>
+  <bpmn2:message id="_xJRNMGeZEDyi7pUAzxfVNQ" itemRef="starterType" name="starter"/>
+  <bpmn2:itemDefinition id="correlation_property_id_Type" structureRef="String"/>
+  <bpmn2:correlationProperty id="correlation_property_id" name="correlation_property_name" type="correlation_property_id_Type">
+    <bpmn2:correlationPropertyRetrievalExpression id="_1AB2B787-2048-4B30-9F22-3BFB64F5CE1A" messageRef="_xJRNMGeZEDyi7pUAzxfVNQ">
+      <bpmn2:messagePath id="_525A878A-058E-46DD-AC00-00775E7E5C25" evaluatesToTypeRef="_141B52DE-9453-44C6-B81F-F7B4F354DC27" language="java">correlation_id</bpmn2:messagePath>
+    </bpmn2:correlationPropertyRetrievalExpression>
+  </bpmn2:correlationProperty>
+  <bpmn2:collaboration id="_A5C070E8-5597-4E23-A392-41763E072F00" name="Default Collaboration">
+    <bpmn2:participant id="_07477E55-3075-4C8C-8FCF-C042C2875341" name="Pool Participant" processRef="test_confluent.starter_event_with_data"/>
+    <bpmn2:correlationKey id="correlation_id" name="correlation_name">
+      <bpmn2:correlationPropertyRef>correlation_property_id</bpmn2:correlationPropertyRef>
+    </bpmn2:correlationKey>
+  </bpmn2:collaboration>
+  <bpmn2:process id="test_confluent.starter_event_with_data" drools:packageName="com.myspace.test_confluent" drools:version="1.0" drools:adHoc="false" name="starter-event-with-data" isExecutable="true" processType="Public">
+    <bpmn2:property id="message" itemSubjectRef="_messageItem" name="message"/>
+    <bpmn2:property id="eventData" itemSubjectRef="_eventDataItem" name="eventData"/>
+    <bpmn2:sequenceFlow id="_5ABF812C-6E65-4157-AA09-AECC5353E7A7" sourceRef="_7F8836C9-CE27-4C2E-841B-4A4FD0B1C5C2" targetRef="_A20F1255-49B3-4365-9B37-B0CE7DC3F49F">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="_BFF066FF-5D89-4C1B-BCDA-956C67F384D6" sourceRef="_A20F1255-49B3-4365-9B37-B0CE7DC3F49F" targetRef="_A160D66A-98A6-4656-AF2D-1760DCB4D686">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.source">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:startEvent id="_7F8836C9-CE27-4C2E-841B-4A4FD0B1C5C2">
+      <bpmn2:outgoing>_5ABF812C-6E65-4157-AA09-AECC5353E7A7</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition drools:msgref="starter" messageRef="_xJRNMGeZEDyi7pUAzxfVNQ"/>
+    </bpmn2:startEvent>
+    <bpmn2:scriptTask id="_A20F1255-49B3-4365-9B37-B0CE7DC3F49F" name="Log" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[Log]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_5ABF812C-6E65-4157-AA09-AECC5353E7A7</bpmn2:incoming>
+      <bpmn2:outgoing>_BFF066FF-5D89-4C1B-BCDA-956C67F384D6</bpmn2:outgoing>
+      <bpmn2:script>System.out.println("message: " + message);
+System.out.println("eventData: " + eventData);
+System.out.println("Process started");</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:endEvent id="_A160D66A-98A6-4656-AF2D-1760DCB4D686">
+      <bpmn2:incoming>_BFF066FF-5D89-4C1B-BCDA-956C67F384D6</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:correlationSubscription id="_2EB1C6BC-B248-4715-84B3-3049D91810EE" correlationKeyRef="correlation_id">
+      <bpmn2:correlationPropertyBinding id="_72F3A242-4846-4B38-B41D-BDC567C90D76" correlationPropertyRef="correlation_property_id">
+        <bpmn2:dataPath id="_1D0A75D9-C566-46C5-A9FC-9C95475488AB" evaluatesToTypeRef="_19339796-FA17-46E7-965F-5BB51C53AC51" language="java">"42"</bpmn2:dataPath>
+      </bpmn2:correlationPropertyBinding>
+    </bpmn2:correlationSubscription>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="test_confluent.starter_event_with_data">
+      <bpmndi:BPMNShape id="shape__A160D66A-98A6-4656-AF2D-1760DCB4D686" bpmnElement="_A160D66A-98A6-4656-AF2D-1760DCB4D686">
+        <dc:Bounds height="56" width="56" x="763" y="259"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__A20F1255-49B3-4365-9B37-B0CE7DC3F49F" bpmnElement="_A20F1255-49B3-4365-9B37-B0CE7DC3F49F">
+        <dc:Bounds height="102" width="154" x="525" y="236"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__7F8836C9-CE27-4C2E-841B-4A4FD0B1C5C2" bpmnElement="_7F8836C9-CE27-4C2E-841B-4A4FD0B1C5C2">
+        <dc:Bounds height="56" width="56" x="385" y="259"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_shape__A20F1255-49B3-4365-9B37-B0CE7DC3F49F_to_shape__A160D66A-98A6-4656-AF2D-1760DCB4D686" bpmnElement="_BFF066FF-5D89-4C1B-BCDA-956C67F384D6">
+        <di:waypoint x="679" y="287"/>
+        <di:waypoint x="763" y="287"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_shape__7F8836C9-CE27-4C2E-841B-4A4FD0B1C5C2_to_shape__A20F1255-49B3-4365-9B37-B0CE7DC3F49F" bpmnElement="_5ABF812C-6E65-4157-AA09-AECC5353E7A7">
+        <di:waypoint x="413" y="287"/>
+        <di:waypoint x="525" y="287"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn2:relationship type="BPSimData">
+    <bpmn2:extensionElements>
+      <bpsim:BPSimData>
+        <bpsim:Scenario id="default" name="Simulationscenario">
+          <bpsim:ScenarioParameters/>
+          <bpsim:ElementParameters elementRef="_A20F1255-49B3-4365-9B37-B0CE7DC3F49F">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+            <bpsim:ResourceParameters>
+              <bpsim:Availability>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Availability>
+              <bpsim:Quantity>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Quantity>
+            </bpsim:ResourceParameters>
+            <bpsim:CostParameters>
+              <bpsim:UnitCost>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:UnitCost>
+            </bpsim:CostParameters>
+          </bpsim:ElementParameters>
+        </bpsim:Scenario>
+      </bpsim:BPSimData>
+    </bpmn2:extensionElements>
+    <bpmn2:source>_xJP_EGeZEDyi7pUAzxfVNQ</bpmn2:source>
+    <bpmn2:target>_xJP_EGeZEDyi7pUAzxfVNQ</bpmn2:target>
+  </bpmn2:relationship>
+</bpmn2:definitions>
